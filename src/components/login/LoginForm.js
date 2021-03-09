@@ -1,0 +1,65 @@
+import { useState, useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { BASE_URL } from "../../constants/api";
+import FormError from "../common/FormError";
+
+const url = `${BASE_URL}auth/local`;
+console.log(url);
+
+const schema = yup.object().shape({
+  identifier: yup.string().required("Please enter your username"),
+  password: yup.string().required("Please enter your password"),
+});
+
+export default function LoginForm(data) {
+  const [submitting, setSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState(null);
+  const [, setAuth] = useContext(AuthContext);
+
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  async function onSubmit() {
+    setSubmitting(true);
+    setLoginError(null);
+    try {
+      const response = await axios.post(url, data);
+      setAuth(response.data);
+    } catch (error) {
+      setLoginError(error.toString());
+    }
+  }
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {loginError && <FormError>{loginError}</FormError>}
+        <fieldset disabled={submitting}>
+          <div>
+            <input name="identifier" placeholder="Username" ref={register} />
+            {errors.identifier && (
+              <FormError>{errors.identifier.message}</FormError>
+            )}
+          </div>
+
+          <div>
+            <input
+              name="password"
+              placeholder="Password"
+              ref={register}
+              type="password"
+            />
+            {errors.password && (
+              <FormError>{errors.password.message}</FormError>
+            )}
+          </div>
+          <button>{submitting ? "Logging in..." : "Login"}</button>
+        </fieldset>
+      </form>
+    </>
+  );
+}
