@@ -8,14 +8,13 @@ import { BASE_URL } from "../../constants/api";
 import FormError from "../common/FormError";
 
 const url = `${BASE_URL}auth/local`;
-console.log(url);
 
 const schema = yup.object().shape({
   identifier: yup.string().required("Please enter your username"),
   password: yup.string().required("Please enter your password"),
 });
 
-export default function LoginForm(data) {
+export default function LoginForm() {
   const [submitting, setSubmitting] = useState(false);
   const [loginError, setLoginError] = useState(null);
   const [, setAuth] = useContext(AuthContext);
@@ -24,7 +23,8 @@ export default function LoginForm(data) {
     resolver: yupResolver(schema),
   });
 
-  async function onSubmit() {
+  async function onSubmit(data) {
+    console.log(data);
     setSubmitting(true);
     setLoginError(null);
     try {
