@@ -23,12 +23,11 @@ export default function ProductsList() {
       }
     }
     getAllProducts();
-  });
+  }, []);
 
   if (loading) return <div>Loading..</div>;
   if (error) return <div>An error occured..</div>;
 
-  //   console.log(products);
   return (
     <>
       <ul>
