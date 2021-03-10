@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -7,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BASE_URL } from "../../constants/api";
 import FormError from "../common/FormError";
 
-const url = `${BASE_URL}auth/local`;
+const url = `${BASE_URL}/auth/local`;
 
 const schema = yup.object().shape({
   identifier: yup.string().required("Please enter your username"),
@@ -19,6 +20,7 @@ export default function LoginForm() {
   const [loginError, setLoginError] = useState(null);
   const [, setAuth] = useContext(AuthContext);
 
+  const history = useHistory();
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
@@ -30,6 +32,7 @@ export default function LoginForm() {
     try {
       const response = await axios.post(url, data);
       setAuth(response.data);
+      history.push("/dashboard/");
     } catch (error) {
       setLoginError(error.toString());
     }
