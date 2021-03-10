@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { BASE_URL, PRODUCTS_ENDPOINT } from "../../../constants/api";
 import useAxios from "../../../hooks/useAxios";
 
-export default function ProductList() {
+export default function ProductsList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(null);
 
   const http = useAxios();
 
@@ -24,9 +25,10 @@ export default function ProductList() {
     getAllProducts();
   });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>an error happend</div>;
+  if (loading) return <div>Loading..</div>;
+  if (error) return <div>An error occured..</div>;
 
+  //   console.log(products);
   return (
     <>
       <ul>
@@ -34,12 +36,11 @@ export default function ProductList() {
           return (
             <li key={product.id}>
               <h3>{product.title}</h3>
-              <h3>{product.description}</h3>
+              <p>{product.description}</p>
             </li>
           );
         })}
       </ul>
-      ;
     </>
   );
 }
