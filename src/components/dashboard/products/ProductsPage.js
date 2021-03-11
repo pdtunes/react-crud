@@ -7,7 +7,7 @@ export default function ProductPage() {
   return (
     <DashboardPage>
       <Heading size="3" content="Products" />
-      <Link to="/dashboard/products/add"> Add new product </Link>
+      <Link to="/dashboard/products/add">ADD NEW PRODUCT</Link>
       <ProductList />
     </DashboardPage>
   );

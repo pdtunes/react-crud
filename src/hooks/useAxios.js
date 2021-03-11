@@ -8,7 +8,7 @@ export default function useAxios() {
   const [auth] = useContext(AuthContext);
 
   const apiClient = axios.create({
-    baseUrl: url,
+    baseURL: url,
   });
 
   apiClient.interceptors.request.use(function (config) {
@@ -16,5 +16,6 @@ export default function useAxios() {
     config.headers.Authorization = token ? `Bearer ${token}` : "";
     return config;
   });
+
   return apiClient;
 }

@@ -7,8 +7,8 @@ import ProductsPage from "./components/dashboard/products/ProductsPage";
 import AddProducts from "./components/dashboard/products/AddProducts";
 import EditProduct from "./components/dashboard/products/EditProduct";
 import Nav from "./components/layout/Nav";
-import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
+import "./App.css";
 
 function App() {
   return (
@@ -30,11 +30,11 @@ function App() {
             <Route path="/dashboard/products" exact>
               <ProductsPage />
             </Route>
-            <Route path="/dashboard/add" exact>
+            <Route path="/dashboard/products/add" exact>
               <AddProducts />
-              <Route path="/dashboard/product/edit/:id" exact>
-                <EditProduct />
-              </Route>
+            </Route>
+            <Route path="/dashboard/product/edit/:id">
+              <EditProduct />
             </Route>
           </Switch>
         </div>

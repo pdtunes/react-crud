@@ -17,7 +17,6 @@ export default function ProductsList() {
           const response = await http.get(`${BASE_URL}${PRODUCTS_ENDPOINT}`);
           setProducts(response.data);
         } catch (error) {
-          console.log(error);
           setError(error);
         } finally {
           setLoading(false);
@@ -30,7 +29,7 @@ export default function ProductsList() {
   );
 
   if (loading) return <div>Loading..</div>;
-  if (error) return <div>An error occured..</div>;
+  if (error) return <div>an error happened</div>;
 
   return (
     <>
@@ -38,11 +37,10 @@ export default function ProductsList() {
         {products.map((product) => {
           return (
             <li key={product.id}>
-              {/* <img src={product.image_url} /> */}
               <h3>{product.title}</h3>
               <p>{product.description}</p>
               <Link to={`/dashboard/product/edit/${product.id}`}>
-                Edit product
+                EDIT PRODUCT
               </Link>
             </li>
           );
